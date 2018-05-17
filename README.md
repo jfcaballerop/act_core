@@ -22,7 +22,7 @@ _Cuidado con estos ficheros para generarlos con los volumes de las GEMAS enlazad
 ```
 docker-compose build
 docker-compose run web rails new . --force --skip-bundle --skip-active-record --skip-test --skip-system-test --api -T
-docker-compose run web bundle install
+docker-compose run --rm web bundle install
 ```
 ```
 docker-compose down
