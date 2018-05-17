@@ -1,0 +1,33 @@
+version: '3'
+services:
+  db:
+    # instead of building it from zero we'll use an existent image (see docker hub)
+    build: ./docker/mongo
+    container_name: "mongodb"
+  # it needs to persist data so we keep it (even if we "kill" the container)
+    environment:
+      - MONGO_DATA_DIR=/data/db
+      - MONGO_LOG_DIR=/dev/null
+    volumes:
+      - ./data/db:/data/db   
+      - ./data/bck:/tmp/bck
+    # we export the port 27017 :B
+    ports:
+      - "27018:27017"        
+    command: mongod --smallfiles --logpath=/dev/null # --quiet
+    
+  web:
+    build: ./docker/rails
+    container_name: "sga_app_web"
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    volumes:
+      - .:/opt/src/sga_core
+      - /usr/data/volumes/bundle:/bundle
+    environment:
+      - BUNDLE_PATH=/bundle
+    env_file:
+      - .env-app-config
+    ports:
+      - "4000:3000"
+    depends_on:
+      - db

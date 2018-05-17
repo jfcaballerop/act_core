@@ -1,0 +1,6 @@
+FROM mongo
+
+WORKDIR /tmp
+
+COPY initDB.js /docker-entrypoint-initdb.d/
+
