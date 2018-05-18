@@ -9,8 +9,9 @@ services:
       - MONGO_DATA_DIR=/data/db
       - MONGO_LOG_DIR=/dev/null
     volumes:
-      - ./data/db:/data/db   
-      - ./data/bck:/tmp/bck
+      - ./data:/data
+#      - ./data/bck:/tmp/bck
+# Comentar la linea de arriba y poner todo en el mismo volumen ./data:/data en caso de dar error 100 de Mongo
     # we export the port 27017 :B
     ports:
       - "27018:27017"        
