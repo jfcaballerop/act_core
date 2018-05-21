@@ -3,6 +3,8 @@ class UsersController < ApplicationController
 
   # GET /users
   def index
+    binding.pry
+    # byebug
     @users = User.all
 
     render json: @users
