@@ -8,7 +8,11 @@ class AuthenticateUser
 
   def call
     # byebug
-    JsonWebToken.encode(user_id: user.id.to_s) if user
+    # JsonWebToken.encode(user_id: user.id.to_s) if user
+    payload[:user_id] = user.id.to_s
+    payload[:user_login] = user.login
+
+    JsonWebToken.encode(payload) if user
   end
 
   private
