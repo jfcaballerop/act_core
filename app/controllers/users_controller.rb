@@ -3,7 +3,7 @@ class UsersController < ApplicationController
 
   # GET /users
   def index
-    binding.pry
+    # binding.pry
     # byebug
     @users = User.all
 
