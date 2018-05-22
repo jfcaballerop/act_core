@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :roles
   post 'authenticate', to: 'authentication#authenticate'
   
   resources :cons_ords
