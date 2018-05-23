@@ -4,7 +4,7 @@ class Role
     field :code, type: String
     field :desc, type: String
 
-    has_and_belongs_to_many :users
+    # has_and_belongs_to_many :users
 
 
 end
