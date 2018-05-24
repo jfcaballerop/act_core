@@ -6,8 +6,16 @@ class UsersController < ApplicationController
     # binding.pry
     # byebug
     @users = User.all
+    @ret = []
 
-    render json: @users
+    @users.map do |u|
+      # binding.pry
+      u["roles_val"] = []
+      u["roles_val"] = u.roles.only :code
+      @ret << u
+    end
+
+    render json: @ret
   end
 
   # GET /users/1
