@@ -41,3 +41,30 @@ Generar scaffold:
 docker-compose run --rm web rails g scaffold api/v1/user name email
 
 ```
+
+---
+## Pasos para debug
+
+Habilitar las gemas :
+```
+  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem "pry-byebug"
+
+```
+Habilitar la terminal en el docker-copose.yml:
+```
+web:
+...
+    stdin_open: true
+    tty: true
+```
+
+Arrancar el compose:
+```
+docker-compose up -d
+```
+
+Attach la aplicacion:
+```
+docker attach sga_app_web
+```
