@@ -6,18 +6,36 @@ class UsersController < ApplicationController
     # binding.pry
     # byebug
     @users = User.all
+    @ret = []
 
-    render json: @users
+    @users.map do |u|
+      # binding.pry
+      u["roles_val"] = []
+      u["roles_val"] = u.roles.only :code
+      @ret << u
+    end
+
+    render json: @ret
   end
 
   # GET /users/1
   def show
-    render json: @user
+    @json = {
+      id: @user._id,
+      name: @user.name,
+      login: @user.login,
+      roles: @user.roles
+    }
+    render json: @json
   end
 
   # POST /users
   def create
     @user = User.new(user_params)
+
+    # binding.pry
+    @user.roles << Role.where(code: {'$in': get_roles})
+    ## Tener en cuenta para el Front, si el role va vacío no se puede loguear en al aplicacion
 
     if @user.save
       render json: @user, status: :created, location: @user
@@ -48,6 +66,10 @@ class UsersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def user_params
-      params.require(:user).permit(:name, :login, :password, :password_digest)
+      params.require(:user).permit(:name, :login, :password, :password_digest, :roles)
+    end
+
+    def get_roles
+      params[:user][:roles]
     end
 end
